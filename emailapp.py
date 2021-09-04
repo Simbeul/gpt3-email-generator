@@ -2,7 +2,7 @@ import streamlit as st
 import openai
 from ml_backend import ml_backend
 
-st.title("Convert Python to Natural Language")
+st.title("Turn python code into real words")
 st.text("by Simon Bel")
 
 st.markdown(""" 
@@ -12,7 +12,7 @@ This project was built to demonstrate the power of the all new *OpenAI Codex*, a
 
 """)
 
-st.markdown("# Convert Python3 to Natural Language")
+st.markdown("## Convert Python3 to Natural Language")
 
 backend = ml_backend()
 
