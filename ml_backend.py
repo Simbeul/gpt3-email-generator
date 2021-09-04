@@ -2,26 +2,18 @@ import openai
 
 class ml_backend:
         
-    openai.api_key = "USE-YOUR-OWN-API-KEY-HERE"
+    openai.api_key = "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"
 
-    def generate_email(self, userPrompt ="Write me a professionally sounding email", start="Dear"):
-        """Returns a generated an email using GPT3 with a certain prompt and starting sentence"""
-
+    def generate_explanation(self, userPrompt ="def remove_common_prefix(x, prefix, ws_prefix): \n    x[\"completion\"] = x[\"completion\"].str[len(prefix) :] \n    if ws_prefix: \n        # keep the single whitespace as prefix \n        x[\"completion\"] = \" \" + x[\"completion\"] \nreturn"):
         response = openai.Completion.create(
-        engine="davinci",
-        prompt=userPrompt + "\n\n" + start,
-        temperature=0.71,
-        max_tokens=150,
-        top_p=1,
-        frequency_penalty=0.36,
-        presence_penalty=0.75
+        engine="davinci-codex",
+        prompt= "# Python 3 \n" + userPrompt + " \n\n# Explanation of what the code does\n\n#",
+        temperature=0,
+        max_tokens=64,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0,
+        stop=["#"]
         )
         return response.get("choices")[0]['text']
-
-    def replace_spaces_with_pluses(self, sample):
-        """Returns a string with each space being replaced with a plus so the email hyperlink can be formatted properly"""
-        changed = list(sample)
-        for i, c in enumerate(changed):
-            if(c == ' ' or c =='  ' or c =='   ' or c=='\n' or c=='\n\n'):
-                changed[i] = '+'
-        return ''.join(changed)
+        
