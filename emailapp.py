@@ -17,12 +17,25 @@ st.markdown("## Convert Python3 to Natural Language")
 backend = ml_backend()
 
 with st.form(key="form"):
-    prompt = st.text_area("Paste your complicated Python3 code and we'll explain what it means below.")
+    prompt = st.text_area("Paste your complicated Python3 code and we'll explain what it means below. Not sure what to paste? Try the code snippet below.")
 
     submit_button = st.form_submit_button(label='Generate Explanation')
+
+    st.markdown('''Suggested code to try: 
+    ''')
+
+    code = '''def remove_common_prefix(x, prefix, ws_prefix): 
+        x["completion"] = x["completion"].str[len(prefix) :] 
+        if ws_prefix: 
+            # keep the single whitespace as prefix 
+            x["completion"] = " " + x["completion"] 
+        return x 
+    '''
+
+    st.code(code, language='python')
 
     if submit_button:
         with st.spinner("Generating Explanation..."):
             output = backend.generate_explanation(prompt)
-        st.markdown("# Code Explanation:")
+        st.markdown("## Code Explanation:")
         st.subheader(output)
