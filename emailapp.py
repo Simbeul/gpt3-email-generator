@@ -21,10 +21,16 @@ with st.form(key="form"):
 
     submit_button = st.form_submit_button(label='Generate Explanation')
 
-    st.markdown('''Just want to try it out? Test it with this sample code: 
+    if submit_button:
+        with st.spinner("Generating Explanation..."):
+            output = backend.generate_explanation(prompt)
+        st.markdown("## Code Explanation:")
+        st.subheader(output)
+
+st.markdown('''Just want to try it out? Test it with this sample code: 
     ''')
 
-    code = '''def remove_common_prefix(x, prefix, ws_prefix): 
+code = '''def remove_common_prefix(x, prefix, ws_prefix): 
         x["completion"] = x["completion"].str[len(prefix) :] 
         if ws_prefix: 
             # keep the single whitespace as prefix 
@@ -32,10 +38,4 @@ with st.form(key="form"):
         return x 
     '''
 
-    st.code(code, language='python')
-
-    if submit_button:
-        with st.spinner("Generating Explanation..."):
-            output = backend.generate_explanation(prompt)
-        st.markdown("## Code Explanation:")
-        st.subheader(output)
+st.code(code, language='python')
